@@ -1,7 +1,7 @@
 ---
 title: "Lab 1 Homework"
-author: "Please Add Your Name Here"
-date: "2021-12-27"
+author: "Eliza Mata"
+date: "2022-01-04"
 output:
   html_document: 
     theme: spacelab
@@ -16,7 +16,7 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 **1. Please complete the [class survey](https://forms.gle/hh5hmzTZgLYxkP7W9) if you have not already done so.**
 
 **2. What is the difference between R and RStudio? What is GitHub and why is it useful to programmers?**  
-
+Answer: R is a programing language while R studio is a system that uses R.
 **3. Navigate to my [BIS15L](https://github.com/jmledford3115/BIS15LW2022_jledford) repository on GitHub. Notice that near the bottom there is a nice, clean description of the repository. You want this on your repository! It is built by making edits to the `README.md` file using the RMarkdown conventions. Edit your repository's `README.md` file so that you have a clean informative description, including your email address. Be creative! You don't need to just copy mine. There are lots of examples online.**  
 
 **4. Calculate the following expressions. Be sure to include each one in a separate code chunk.**  
@@ -37,6 +37,10 @@ pi <- 3.14159265359
 
 ```r
 ?mean
+```
+
+```
+## starting httpd help server ... done
 ```
 
 **9. Let's calculate the mean for the numbers 2, 8, 6, 4, 9, 10. I have built an object `x` for you below so all you need to do is run the first code chunk and then create a second code chunk that shows the calculation. Give it a try!**  
