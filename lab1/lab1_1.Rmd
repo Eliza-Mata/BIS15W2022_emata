@@ -14,6 +14,9 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+```{r}
+getwd()
+```
 
 ## Background  
 In nearly every field of science, our ability to generate data has exceeded our capacity for analysis. For me, this means that there is the potential for loss to science; many important discoveries may go unnoticed because we are unable to efficiently analyze data.  
