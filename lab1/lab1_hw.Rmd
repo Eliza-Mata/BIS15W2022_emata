@@ -8,6 +8,7 @@ output:
     keep_md: yes
 ---
 
+
 ## Instructions
 Answer the following questions and complete the exercises in RMarkdown. Please embed all of your code and push your final work to your repository. Your final lab report should be organized, clean, and run free from errors. Remember, you must remove the `#` for the included code chunks to run. Be sure to add your name to the author header above.  
 
@@ -16,7 +17,8 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 **1. Please complete the [class survey](https://forms.gle/hh5hmzTZgLYxkP7W9) if you have not already done so.**
 
 **2. What is the difference between R and RStudio? What is GitHub and why is it useful to programmers?**  
-Answer: R is a programing language while R studio is a system that uses R.
+Answer: R is a programming language while R studio is a system that uses R. Github is a website and application that organizes files and records changes in codes.
+
 **3. Navigate to my [BIS15L](https://github.com/jmledford3115/BIS15LW2022_jledford) repository on GitHub. Notice that near the bottom there is a nice, clean description of the repository. You want this on your repository! It is built by making edits to the `README.md` file using the RMarkdown conventions. Edit your repository's `README.md` file so that you have a clean informative description, including your email address. Be creative! You don't need to just copy mine. There are lots of examples online.**  
 
 **4. Calculate the following expressions. Be sure to include each one in a separate code chunk.**  
