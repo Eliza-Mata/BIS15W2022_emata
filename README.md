@@ -1,6 +1,6 @@
 # BIS15W2022_emata
 # This is Eliza's repository
-##Eliza Mata
-##UC Davis Sophmore
-###Major: Biology
+Eliza Mata
+UC Davis Sophomore
+Major: Biology
 
