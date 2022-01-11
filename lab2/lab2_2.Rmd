@@ -144,7 +144,7 @@ total_earnings
 2. Add this information to the data matrix. Hint: you are adding a row, not a column.  
 ```{r}
 final_harry_poter_matrix<-rbind(all_harry_potter_matrix, total_earnings)
-final_harry_poter_matrix
+final
 ```
 
 ## A few Extras
