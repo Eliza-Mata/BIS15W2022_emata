@@ -150,6 +150,7 @@ mean<-(hsprings[,1])
 mean (mean)
 ```
 **I named it mean by accident lol**
+
 5. Save your hot springs data as a `.csv` file! Do not allow row names. 
 ```{r}
 write.csv(hsprings, "hsprings_data.csv", row.names = FALSE)
