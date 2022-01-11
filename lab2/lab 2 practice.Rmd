@@ -1,0 +1,23 @@
+---
+title: "Lab 2 practice"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+venom_GT<-270
+```
+```{r}
+chiron<-261
+```
+```{r}
+veyron<-268
+```
+```{r}
+(270+261+268)/3
+```
+
+
