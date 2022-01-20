@@ -140,11 +140,13 @@ filter(weight>450)
 ## Height to Weight Ratio
 13. It's easy to be strong when you are heavy and tall, but who is heavy and short? Which superheros have the highest height to weight ratio?
 ```{r}
+names(superhero_info)
+```
+
+```{r}
 superhero_info %>%
-select(name, weight,height) %>%
-arrange(height) %>%
-arrange(desc(weight)) %>%
-filter( height <=155)
+  mutate(height_weight_ratio = Height/Weight) %>% 
+select(name, weight, height) 
 ```
 
 ## `superhero_powers`

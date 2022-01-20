@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2022-01-18" />
+<meta name="date" content="2022-01-20" />
 
 <title>dplyr Superhero</title>
 
@@ -241,7 +241,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">dplyr Superhero</h1>
-<h4 class="date">2022-01-18</h4>
+<h4 class="date">2022-01-20</h4>
 
 </div>
 
@@ -578,32 +578,22 @@ filter(weight&gt;450)</code></pre>
 <li>It’s easy to be strong when you are heavy and tall, but who is heavy and short? Which superheros have the highest height to weight ratio?</li>
 </ol>
 <pre class="r"><code>superhero_info %&gt;%
-select(name, weight,height) %&gt;%
-arrange(height) %&gt;%
-arrange(desc(weight)) %&gt;%
-filter( height &lt;=155)</code></pre>
-<pre><code>## # A tibble: 19 x 3
-##    name              weight height
-##    &lt;chr&gt;              &lt;dbl&gt;  &lt;dbl&gt;
-##  1 Giganta              630   62.5
-##  2 Jack of Hearts        79  155  
-##  3 Lightning Lad         65  155  
-##  4 Utgard-Loki           58   15.2
-##  5 X-23                  50  155  
-##  6 Franklin Richards     45  142  
-##  7 Violet Parr           41  137  
-##  8 Wiz Kid               39  140  
-##  9 Robin V               38  137  
-## 10 Dash                  27  122  
-## 11 Rocket Raccoon        25  122  
-## 12 Krypto                18   64  
-## 13 Howard the Duck       18   79  
-## 14 Yoda                  17   66  
-## 15 Jack-Jack             14   71  
-## 16 Bloodwraith           NA   30.5
-## 17 King Kong             NA   30.5
-## 18 Anti-Monitor          NA   61  
-## 19 Godzilla              NA  108</code></pre>
+  mutate(height_weight_ratio= height/weight) %&gt;% 
+select(name, weight, height) </code></pre>
+<pre><code>## # A tibble: 734 x 3
+##    name          weight height
+##    &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;
+##  1 A-Bomb           441    203
+##  2 Abe Sapien        65    191
+##  3 Abin Sur          90    185
+##  4 Abomination      441    203
+##  5 Abraxas           NA     NA
+##  6 Absorbing Man    122    193
+##  7 Adam Monroe       NA     NA
+##  8 Adam Strange      88    185
+##  9 Agent 13          61    173
+## 10 Agent Bob         81    178
+## # ... with 724 more rows</code></pre>
 </div>
 <div id="superhero_powers" class="section level2">
 <h2><code>superhero_powers</code></h2>

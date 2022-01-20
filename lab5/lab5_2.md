@@ -1,6 +1,6 @@
 ---
 title: "dplyr Superhero"
-date: "2022-01-18"
+date: "2022-01-20"
 output:
   html_document: 
     theme: spacelab
@@ -465,35 +465,25 @@ filter(weight>450)
 
 ```r
 superhero_info %>%
-select(name, weight,height) %>%
-arrange(height) %>%
-arrange(desc(weight)) %>%
-filter( height <=155)
+  mutate(height_weight_ratio= height/weight) %>% 
+select(name, weight, height) 
 ```
 
 ```
-## # A tibble: 19 x 3
-##    name              weight height
-##    <chr>              <dbl>  <dbl>
-##  1 Giganta              630   62.5
-##  2 Jack of Hearts        79  155  
-##  3 Lightning Lad         65  155  
-##  4 Utgard-Loki           58   15.2
-##  5 X-23                  50  155  
-##  6 Franklin Richards     45  142  
-##  7 Violet Parr           41  137  
-##  8 Wiz Kid               39  140  
-##  9 Robin V               38  137  
-## 10 Dash                  27  122  
-## 11 Rocket Raccoon        25  122  
-## 12 Krypto                18   64  
-## 13 Howard the Duck       18   79  
-## 14 Yoda                  17   66  
-## 15 Jack-Jack             14   71  
-## 16 Bloodwraith           NA   30.5
-## 17 King Kong             NA   30.5
-## 18 Anti-Monitor          NA   61  
-## 19 Godzilla              NA  108
+## # A tibble: 734 x 3
+##    name          weight height
+##    <chr>          <dbl>  <dbl>
+##  1 A-Bomb           441    203
+##  2 Abe Sapien        65    191
+##  3 Abin Sur          90    185
+##  4 Abomination      441    203
+##  5 Abraxas           NA     NA
+##  6 Absorbing Man    122    193
+##  7 Adam Monroe       NA     NA
+##  8 Adam Strange      88    185
+##  9 Agent 13          61    173
+## 10 Agent Bob         81    178
+## # ... with 724 more rows
 ```
 
 ## `superhero_powers`
