@@ -3,9 +3,9 @@ title: "Midterm 1"
 author: "Eliza Mata"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: no
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -122,6 +122,13 @@ defaunation %>%
 
 12. (4 points) Based on your interest, do one exploratory analysis on the `gabon` data of your choice. This analysis needs to include a minimum of two functions in `dplyr.`
 ```{r}
-
+land_use_diversity<-defaunation %>% 
+  group_by(land_use) %>%
+  select(land_use,contains("ra"))
+land_use_diversity
+```
+```{r}
+land_use_diversity %>%
+  summarize(average_ra_apes=mean(ra_apes), average_ra_birds=mean(ra_birds),average_ra_elephant=mean(ra_elephant), average_ra_monkeys=mean(ra_monkeys), average_ra_rodent=mean(ra_rodent), average_ra_ungulate=mean(ra_ungulate))   
 ```
 
