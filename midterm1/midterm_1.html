@@ -11,7 +11,7 @@
 
 <meta name="author" content="Eliza Mata" />
 
-<meta name="date" content="2022-01-26" />
+<meta name="date" content="2022-01-27" />
 
 <title>Midterm 1</title>
 
@@ -167,7 +167,7 @@ pre code {
 
 <h1 class="title toc-ignore">Midterm 1</h1>
 <h4 class="author">Eliza Mata</h4>
-<h4 class="date">2022-01-26</h4>
+<h4 class="date">2022-01-27</h4>
 
 </div>
 
@@ -263,49 +263,90 @@ is.factor(elephants$sex)</code></pre>
 <pre class="r"><code>female_elephants&lt;-elephants%&gt;%
   filter(sex==&quot;F&quot;)</code></pre>
 <pre class="r"><code>female_elephants %&gt;%
-  mutate(average_age=mean(age)) %&gt;%
-  mutate(average_height=mean(height))</code></pre>
-<pre><code>## # A tibble: 150 x 5
-##      age height sex   average_age average_height
-##    &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;          &lt;dbl&gt;
-##  1 11.1   218.  F            12.8           190.
-##  2  2.33  133.  F            12.8           190.
-##  3  2.42  145.  F            12.8           190.
-##  4 26.5   206.  F            12.8           190.
-##  5 11.8   207   F            12.8           190.
-##  6  0.33   85.6 F            12.8           190.
-##  7 26.8   227.  F            12.8           190.
-##  8 13.4   203   F            12.8           190.
-##  9 28.4   228.  F            12.8           190.
-## 10  2.08  131.  F            12.8           190.
-## # ... with 140 more rows</code></pre>
+  summarize(average_age=mean(age),average_height=mean(height))</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##   average_age average_height
+##         &lt;dbl&gt;          &lt;dbl&gt;
+## 1        12.8           190.</code></pre>
 <pre class="r"><code>male_elephants %&gt;%
-  mutate(average_age=mean(age)) %&gt;%
-  mutate(average_height=mean(height))</code></pre>
-<pre><code>## # A tibble: 138 x 5
-##      age height sex   average_age average_height
-##    &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;          &lt;dbl&gt;
-##  1   1.4   120  M            8.95           185.
-##  2  17.5   227  M            8.95           185.
-##  3  12.8   235  M            8.95           185.
-##  4  11.2   210  M            8.95           185.
-##  5  12.7   220  M            8.95           185.
-##  6  12.7   189  M            8.95           185.
-##  7  12.2   225  M            8.95           185.
-##  8  12.2   204  M            8.95           185.
-##  9  28.2   266. M            8.95           185.
-## 10  11.7   233  M            8.95           185.
-## # ... with 128 more rows</code></pre>
+  summarize(average_age=mean(age), average_height=mean(height))</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##   average_age average_height
+##         &lt;dbl&gt;          &lt;dbl&gt;
+## 1        8.95           185.</code></pre>
 <ol start="8" style="list-style-type: decimal">
 <li>(2 points) How does the average height of elephants compare by sex for individuals over 20 years old. Include the min and max height as well as the number of individuals in the sample as part of your analysis.</li>
 </ol>
+<pre class="r"><code>female_elephants %&gt;%
+  filter(age&gt;20) %&gt;%
+  summarize(average_height=mean(height), min_height=min(height),max_height=max(height), total=n())</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##   average_height min_height max_height total
+##            &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;int&gt;
+## 1           232.       193.       278.    37</code></pre>
+<pre class="r"><code>male_elephants %&gt;%
+  filter(age&gt;20) %&gt;%
+  summarize(average_height=mean(height), min_height=min(height),max_height=max(height), total=n())</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##   average_height min_height max_height total
+##            &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;int&gt;
+## 1           270.       229.       304.    13</code></pre>
 <p>For the next series of questions, we will use data from a study on vertebrate community composition and impacts from defaunation in <a href="https://en.wikipedia.org/wiki/Gabon">Gabon, Africa</a>. One thing to notice is that the data include 24 separate transects. Each transect represents a path through different forest management areas.</p>
 <p>Reference: Koerner SE, Poulsen JR, Blanchard EJ, Okouyi J, Clark CJ. Vertebrate community composition and diversity declines along a defaunation gradient radiating from rural villages in Gabon. <em>Journal of Applied Ecology</em>. 2016. This paper, along with a description of the variables is included inside the midterm 1 folder.</p>
 <ol start="9" style="list-style-type: decimal">
-<li><p>(2 points) Load <code>IvindoData_DryadVersion.csv</code> and use the function(s) of your choice to get an idea of the overall structure. Change the variables <code>HuntCat</code> and <code>LandUse</code> to factors.</p></li>
-<li><p>(4 points) For the transects with high and moderate hunting intensity, how does the average diversity of birds and mammals compare?</p></li>
-<li><p>(4 points) One of the conclusions in the study is that the relative abundance of animals drops off the closer you get to a village. Let’s try to reconstruct this (without the statistics). How does the relative abundance (RA) of apes, birds, elephants, monkeys, rodents, and ungulates compare between sites that are less than 3km from a village to sites that are greater than 25km from a village? The variable <code>Distance</code> measures the distance of the transect from the nearest village. Hint: try using the <code>across</code> operator.</p></li>
-<li><p>(4 points) Based on your interest, do one exploratory analysis on the <code>gabon</code> data of your choice. This analysis needs to include a minimum of two functions in <code>dplyr.</code></p></li>
+<li>(2 points) Load <code>IvindoData_DryadVersion.csv</code> and use the function(s) of your choice to get an idea of the overall structure. Change the variables <code>HuntCat</code> and <code>LandUse</code> to factors.</li>
+</ol>
+<pre class="r"><code>defaunation&lt;-readr::read_csv(&quot;data/IvindoData_DryadVersion.csv&quot;)</code></pre>
+<pre><code>## Rows: 24 Columns: 26</code></pre>
+<pre><code>## -- Column specification --------------------------------------------------------
+## Delimiter: &quot;,&quot;
+## chr  (2): HuntCat, LandUse
+## dbl (24): TransectID, Distance, NumHouseholds, Veg_Rich, Veg_Stems, Veg_lian...</code></pre>
+<pre><code>## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>defaunation&lt;-clean_names(defaunation)</code></pre>
+<ol start="10" style="list-style-type: decimal">
+<li>(4 points) For the transects with high and moderate hunting intensity, how does the average diversity of birds and mammals compare?</li>
+</ol>
+<pre class="r"><code>defaunation %&gt;% 
+  select(hunt_cat,diversity_bird_species, diversity_mammal_species) %&gt;%
+  filter(hunt_cat==&quot;High&quot;|hunt_cat==&quot;Moderate&quot;) %&gt;%
+  mutate(average_bird_diversity=mean(diversity_bird_species), average_mammal_diversity=mean(diversity_mammal_species))</code></pre>
+<pre><code>## # A tibble: 15 x 5
+##    hunt_cat diversity_bird_s~ diversity_mamma~ average_bird_di~ average_mammal_~
+##    &lt;chr&gt;                &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1 Moderate              1.76             1.76             1.64             1.71
+##  2 High                  1.88             1.71             1.64             1.71
+##  3 High                  1.26             1.80             1.64             1.71
+##  4 Moderate              1.60             1.69             1.64             1.71
+##  5 Moderate              1.68             2.06             1.64             1.71
+##  6 High                  1.71             1.57             1.64             1.71
+##  7 Moderate              1.46             1.44             1.64             1.71
+##  8 High                  1.86             1.64             1.64             1.71
+##  9 Moderate              1.60             1.38             1.64             1.71
+## 10 Moderate              1.71             1.51             1.64             1.71
+## 11 High                  1.81             1.71             1.64             1.71
+## 12 High                  1.39             1.90             1.64             1.71
+## 13 Moderate              1.48             1.94             1.64             1.71
+## 14 Moderate              1.68             1.68             1.64             1.71
+## 15 High                  1.72             1.83             1.64             1.71</code></pre>
+<ol start="11" style="list-style-type: decimal">
+<li>(4 points) One of the conclusions in the study is that the relative abundance of animals drops off the closer you get to a village. Let’s try to reconstruct this (without the statistics). How does the relative abundance (RA) of apes, birds, elephants, monkeys, rodents, and ungulates compare between sites that are less than 3km from a village to sites that are greater than 25km from a village? The variable <code>Distance</code> measures the distance of the transect from the nearest village. Hint: try using the <code>across</code> operator.</li>
+</ol>
+<pre class="r"><code>defaunation %&gt;%
+  select(distance,contains(&quot;ra&quot;)) %&gt;%
+ arrange(desc(distance)) %&gt;%
+  filter(distance&lt;3|distance&gt;25)</code></pre>
+<pre><code>## # A tibble: 3 x 8
+##   distance transect_id ra_apes ra_birds ra_elephant ra_monkeys ra_rodent
+##      &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+## 1    26.8           24    4.91     31.6        0         54.1       1.29
+## 2     2.92          27    0.24     68.2        0         25.6       4.05
+## 3     2.7           15    0        85.0        0.29       9.09      3.74
+## # ... with 1 more variable: ra_ungulate &lt;dbl&gt;</code></pre>
+<ol start="12" style="list-style-type: decimal">
+<li>(4 points) Based on your interest, do one exploratory analysis on the <code>gabon</code> data of your choice. This analysis needs to include a minimum of two functions in <code>dplyr.</code></li>
 </ol>
 </div>
 
