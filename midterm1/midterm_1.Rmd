@@ -23,6 +23,7 @@ This exam is due by 12:00p on Thursday, January 27.
 If you plan to use any other libraries to complete this assignment then you should load them here.
 ```{r}
 library(tidyverse)
+library(janitor)
 ```
 
 ## Questions  
@@ -32,7 +33,7 @@ Wikipedia's definition of [data science](https://en.wikipedia.org/wiki/Data_scie
   * **We have used systems in order to extract information from the data we used in our home works and labs. We have also cleaned numbers that are structured in order to have better clarity on what the data represents.**
 
 2. (2 points) What is the most helpful or interesting thing you have learned so far in BIS 15L? What is something that you think needs more work or practice?  
- * **
+ * **I learned that even professionally collected data will have some mistakes that need to be fixed, unfortunately. I need more overall practice to get more comfortable with using functions.**
 
 In the midterm 1 folder there is a second folder called `data`. Inside the `data` folder, there is a .csv file called `ElephantsMF`. These data are from Phyllis Lee, Stirling University, and are related to Lee, P., et al. (2013), "Enduring consequences of early experiences: 40-year effects on survival and success among African elephants (Loxodonta africana)," Biology Letters, 9: 20130011. [kaggle](https://www.kaggle.com/mostafaelseidy/elephantsmf).  
 
@@ -51,20 +52,66 @@ is.factor(elephants$sex)
 ```
 
 5. (2 points) How many male and female elephants are represented in the data?
-
+```{r}
+elephants %>%
+  count(sex, sort=T)
+```
+ * **There are 150 females and 138 males**
+ 
 6. (2 points) What is the average age all elephants in the data?
+```{r}
+  mean(elephants$age)
+```
+* **10.97132**
 
 7. (2 points) How does the average age and height of elephants compare by sex?
+```{r}
+male_elephants<-elephants %>%
+  filter(sex=="M")
+```
+```{r}
+female_elephants<-elephants%>%
+  filter(sex=="F")
+```
+```{r}
+female_elephants %>%
+  summarize(average_age=mean(age),average_height=mean(height))
+```
+```{r}
+male_elephants %>%
+  summarize(average_age=mean(age), average_height=mean(height))
+```
 
 8. (2 points) How does the average height of elephants compare by sex for individuals over 20 years old. Include the min and max height as well as the number of individuals in the sample as part of your analysis.  
+```{r}
+female_elephants %>%
+  filter(age>20) %>%
+  summarize(average_height=mean(height), min_height=min(height),max_height=max(height), total=n())
+```
+```{r}
+male_elephants %>%
+  filter(age>20) %>%
+  summarize(average_height=mean(height), min_height=min(height),max_height=max(height), total=n())
+```
 
 For the next series of questions, we will use data from a study on vertebrate community composition and impacts from defaunation in [Gabon, Africa](https://en.wikipedia.org/wiki/Gabon). One thing to notice is that the data include 24 separate transects. Each transect represents a path through different forest management areas.  
 
 Reference: Koerner SE, Poulsen JR, Blanchard EJ, Okouyi J, Clark CJ. Vertebrate community composition and diversity declines along a defaunation gradient radiating from rural villages in Gabon. _Journal of Applied Ecology_. 2016. This paper, along with a description of the variables is included inside the midterm 1 folder.  
 
 9. (2 points) Load `IvindoData_DryadVersion.csv` and use the function(s) of your choice to get an idea of the overall structure. Change the variables `HuntCat` and `LandUse` to factors.
+```{r}
+defaunation<-readr::read_csv("data/IvindoData_DryadVersion.csv")
+defaunation<-clean_names(defaunation)
+```
 
 10. (4 points) For the transects with high and moderate hunting intensity, how does the average diversity of birds and mammals compare?
+```{r}
+defaunation %>% 
+  select(hunt_cat,diversity_bird_species, diversity_mammal_species) %>%
+  filter(hunt_cat=="High") %>%
+  filter(hunt_cat=="Moderate")
+ 
+```
 
 11. (4 points) One of the conclusions in the study is that the relative abundance of animals drops off the closer you get to a village. Let's try to reconstruct this (without the statistics). How does the relative abundance (RA) of apes, birds, elephants, monkeys, rodents, and ungulates compare between sites that are less than 3km from a village to sites that are greater than 25km from a village? The variable `Distance` measures the distance of the transect from the nearest village. Hint: try using the `across` operator.  
 

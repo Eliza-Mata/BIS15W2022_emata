@@ -11,7 +11,7 @@
 
 <meta name="author" content="Eliza Mata" />
 
-<meta name="date" content="2022-01-25" />
+<meta name="date" content="2022-01-26" />
 
 <title>Midterm 1</title>
 
@@ -167,7 +167,7 @@ pre code {
 
 <h1 class="title toc-ignore">Midterm 1</h1>
 <h4 class="author">Eliza Mata</h4>
-<h4 class="date">2022-01-25</h4>
+<h4 class="date">2022-01-26</h4>
 
 </div>
 
@@ -190,6 +190,12 @@ pre code {
 <pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(janitor)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;janitor&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     chisq.test, fisher.test</code></pre>
 </div>
 <div id="questions" class="section level2">
 <h2>Questions</h2>
@@ -199,19 +205,99 @@ pre code {
 </li>
 </ol>
 <ul>
-<li><strong>We have used systems in order to extract information from the data we used in our home works and labs. We have cleaned numbers that are structered in order to have better clarity on what the data represents.</strong></li>
+<li><strong>We have used systems in order to extract information from the data we used in our home works and labs. We have also cleaned numbers that are structured in order to have better clarity on what the data represents.</strong></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
-<li>(2 points) What is the most helpful or interesting thing you have learned so far in BIS 15L? What is something that you think needs more work or practice?</li>
+<li>(2 points) What is the most helpful or interesting thing you have learned so far in BIS 15L? What is something that you think needs more work or practice?<br />
+</li>
 </ol>
+<ul>
+<li><strong>I learned that even professionally collected data will have some mistakes that need to be fixed, unfortunately. I need more overall practice to get more comfortable with using functions.</strong></li>
+</ul>
 <p>In the midterm 1 folder there is a second folder called <code>data</code>. Inside the <code>data</code> folder, there is a .csv file called <code>ElephantsMF</code>. These data are from Phyllis Lee, Stirling University, and are related to Lee, P., et al. (2013), “Enduring consequences of early experiences: 40-year effects on survival and success among African elephants (Loxodonta africana),” Biology Letters, 9: 20130011. <a href="https://www.kaggle.com/mostafaelseidy/elephantsmf">kaggle</a>.</p>
 <ol start="3" style="list-style-type: decimal">
-<li><p>(2 points) Please load these data as a new object called <code>elephants</code>. Use the function(s) of your choice to get an idea of the structure of the data. Be sure to show the class of each variable.</p></li>
-<li><p>(2 points) Change the names of the variables to lower case and change the class of the variable <code>sex</code> to a factor.</p></li>
-<li><p>(2 points) How many male and female elephants are represented in the data?</p></li>
-<li><p>(2 points) What is the average age all elephants in the data?</p></li>
-<li><p>(2 points) How does the average age and height of elephants compare by sex?</p></li>
-<li><p>(2 points) How does the average height of elephants compare by sex for individuals over 20 years old. Include the min and max height as well as the number of individuals in the sample as part of your analysis.</p></li>
+<li>(2 points) Please load these data as a new object called <code>elephants</code>. Use the function(s) of your choice to get an idea of the structure of the data. Be sure to show the class of each variable.</li>
+</ol>
+<pre class="r"><code>elephants&lt;-readr::read_csv(&quot;data/ElephantsMF.csv&quot;)</code></pre>
+<pre><code>## Rows: 288 Columns: 3</code></pre>
+<pre><code>## -- Column specification --------------------------------------------------------
+## Delimiter: &quot;,&quot;
+## chr (1): Sex
+## dbl (2): Age, Height</code></pre>
+<pre><code>## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>(2 points) Change the names of the variables to lower case and change the class of the variable <code>sex</code> to a factor.</li>
+</ol>
+<pre class="r"><code>elephants&lt;-clean_names(elephants)</code></pre>
+<pre class="r"><code>elephants$sex&lt;-as.factor(elephants$sex)
+is.factor(elephants$sex)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>(2 points) How many male and female elephants are represented in the data?</li>
+</ol>
+<pre class="r"><code>elephants %&gt;%
+  count(sex, sort=T)</code></pre>
+<pre><code>## # A tibble: 2 x 2
+##   sex       n
+##   &lt;fct&gt; &lt;int&gt;
+## 1 F       150
+## 2 M       138</code></pre>
+<ul>
+<li><strong>There are 150 females and 138 males</strong></li>
+</ul>
+<ol start="6" style="list-style-type: decimal">
+<li>(2 points) What is the average age all elephants in the data?</li>
+</ol>
+<pre class="r"><code>  mean(elephants$age)</code></pre>
+<pre><code>## [1] 10.97132</code></pre>
+<ul>
+<li><strong>10.97132</strong></li>
+</ul>
+<ol start="7" style="list-style-type: decimal">
+<li>(2 points) How does the average age and height of elephants compare by sex?</li>
+</ol>
+<pre class="r"><code>male_elephants&lt;-elephants %&gt;%
+  filter(sex==&quot;M&quot;)</code></pre>
+<pre class="r"><code>female_elephants&lt;-elephants%&gt;%
+  filter(sex==&quot;F&quot;)</code></pre>
+<pre class="r"><code>female_elephants %&gt;%
+  mutate(average_age=mean(age)) %&gt;%
+  mutate(average_height=mean(height))</code></pre>
+<pre><code>## # A tibble: 150 x 5
+##      age height sex   average_age average_height
+##    &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;          &lt;dbl&gt;
+##  1 11.1   218.  F            12.8           190.
+##  2  2.33  133.  F            12.8           190.
+##  3  2.42  145.  F            12.8           190.
+##  4 26.5   206.  F            12.8           190.
+##  5 11.8   207   F            12.8           190.
+##  6  0.33   85.6 F            12.8           190.
+##  7 26.8   227.  F            12.8           190.
+##  8 13.4   203   F            12.8           190.
+##  9 28.4   228.  F            12.8           190.
+## 10  2.08  131.  F            12.8           190.
+## # ... with 140 more rows</code></pre>
+<pre class="r"><code>male_elephants %&gt;%
+  mutate(average_age=mean(age)) %&gt;%
+  mutate(average_height=mean(height))</code></pre>
+<pre><code>## # A tibble: 138 x 5
+##      age height sex   average_age average_height
+##    &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;          &lt;dbl&gt;
+##  1   1.4   120  M            8.95           185.
+##  2  17.5   227  M            8.95           185.
+##  3  12.8   235  M            8.95           185.
+##  4  11.2   210  M            8.95           185.
+##  5  12.7   220  M            8.95           185.
+##  6  12.7   189  M            8.95           185.
+##  7  12.2   225  M            8.95           185.
+##  8  12.2   204  M            8.95           185.
+##  9  28.2   266. M            8.95           185.
+## 10  11.7   233  M            8.95           185.
+## # ... with 128 more rows</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>(2 points) How does the average height of elephants compare by sex for individuals over 20 years old. Include the min and max height as well as the number of individuals in the sample as part of your analysis.</li>
 </ol>
 <p>For the next series of questions, we will use data from a study on vertebrate community composition and impacts from defaunation in <a href="https://en.wikipedia.org/wiki/Gabon">Gabon, Africa</a>. One thing to notice is that the data include 24 separate transects. Each transect represents a path through different forest management areas.</p>
 <p>Reference: Koerner SE, Poulsen JR, Blanchard EJ, Okouyi J, Clark CJ. Vertebrate community composition and diversity declines along a defaunation gradient radiating from rural villages in Gabon. <em>Journal of Applied Ecology</em>. 2016. This paper, along with a description of the variables is included inside the midterm 1 folder.</p>
