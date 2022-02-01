@@ -42,8 +42,12 @@ fisheries<-clean_names(fisheries)
 ```
 
 ```{r}
-  fisheries$country<-as.factor(fisheries$country, fisheries$isscaap_group_number)
+  fisheries$country<-as.factor(fisheries$country) 
+fisheries$country<-as.factor(fisheries$isscaap_group_number)
+fisheries$country<-as.factor(fisheries$asfis_species_number)
+fisheries$country<-as.factor(fisheries$fao_major_fishing_area)
 ```
+
 
 We need to deal with the years because they are being treated as characters and start with an X. We also have the problem that the column names that are years actually represent data. We haven't discussed tidy data yet, so here is some help. You should run this ugly chunk to transform the data for the rest of the homework. It will only work if you have used janitor to rename the variables in question 2!
 ```{r}
