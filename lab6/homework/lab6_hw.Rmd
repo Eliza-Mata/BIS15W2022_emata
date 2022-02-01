@@ -42,10 +42,10 @@ fisheries<-clean_names(fisheries)
 ```
 
 ```{r}
-  fisheries$country<-as.factor(fisheries$country) 
-fisheries$country<-as.factor(fisheries$isscaap_group_number)
-fisheries$country<-as.factor(fisheries$asfis_species_number)
-fisheries$country<-as.factor(fisheries$fao_major_fishing_area)
+fisheries<-as.factor(fisheries$country) 
+fisheries<-as.factor(fisheries$isscaap_group_number)
+fisheries<-as.factor(fisheries$asfis_species_number)
+fisheries<-as.factor(fisheries$fao_major_fishing_area)
 ```
 
 
