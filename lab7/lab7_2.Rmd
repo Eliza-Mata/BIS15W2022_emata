@@ -42,17 +42,23 @@ life_history <- read_csv("data/mammal_lifehistories_v3.csv") %>% clean_names()
 
 2. Use one or more of the functions from the last lab to determine if there are NA's in the data, how they are represented, and where they are located.
 ```{r}
-
+summary(life_history)
 ```
 
 ```{r}
-
+life_history%>% 
+  purrr::map_df(~ sum(is.na(.))) %>% 
+  pivot_longer(everything(),
+    names_to= "variables",
+    values_to = "num_nas") %>% 
+  arrange(desc(num_nas))
 ```
 
 
 3. Can we use a single approach to deal with NA's in this data set? Given what you learned in the previous lab, how would you manage the NA values?
 ```{r}
-
+life_history3_tidy<- life_history %>%
+  na_if(-999.00)
 ```
 
 ## `naniar`
