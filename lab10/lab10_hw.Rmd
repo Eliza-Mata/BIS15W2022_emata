@@ -3,9 +3,9 @@ title: "Lab 10 Homework"
 author: "Eliza Mata"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: no
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -35,15 +35,18 @@ deserts <- read_csv(here("lab10", "data", "surveys_complete.csv"))
 ```{r}
 glimpse(deserts)
 ```
+
 ```{r}
 summary(deserts)
+```
+```{r}
+skimr::skim(deserts)
 ```
 
 2. How many genera and species are represented in the data? What are the total number of observations? Which species is most/ least frequently sampled in the study?
 ```{r}
 deserts %>%
-  summarize_all(n_distinct) %>%
-  select(taxa, genus, species )
+  count(genus, species)
 ```
 ```{r}
 deserts %>% tabyl(species)
@@ -51,7 +54,8 @@ deserts %>% tabyl(species)
  
 3. What is the proportion of taxa included in this study? Show a table and plot that reflects this count.
 ```{r}
-deserts %>% count(taxa)
+deserts %>% 
+  tabyl(taxa)
 ```
 ```{r}
 deserts %>%
@@ -60,30 +64,65 @@ deserts %>%
 
 4. For the taxa included in the study, use the fill option to show the proportion of individuals sampled by `plot_type.`
 ```{r}
-p<- deserts %>%
+deserts %>%
   ggplot(aes(x=taxa, fill=plot_type )) + geom_bar()
-p
 ```
 
 5. What is the range of weight for each species included in the study? Remove any observations of weight that are NA so they do not show up in the plot.
+
 ```{r}
 deserts %>%
-  ggplot(aes(x=taxa, y=weight)) +geom_boxplot(na.rm = T)
+  filter(weight !="NA") %>%
+  ggplot(aes(x=species, y=weight,)) +geom_boxplot(na.rm = T) +coord_flip()
 ```
 
 6. Add another layer to your answer from #4 using `geom_point` to get an idea of how many measurements were taken for each species.
 ```{r}
-p+geom_point()
+deserts %>%
+  filter(weight!="NA") %>%
+  ggplot(aes(x=species, y=weight)) +geom_point(size=0.05)+coord_flip()+geom_jitter(size=0.05)
 ```
 
 7. [Dipodomys merriami](https://en.wikipedia.org/wiki/Merriam's_kangaroo_rat) is the most frequently sampled animal in the study. How have the number of observations of this species changed over the years included in the study?
 ```{r}
-
+deserts %>%
+  count(species,year) %>%
+  filter(species=="merriami") %>%
+  arrange(year)
 ```
 
 8. What is the relationship between `weight` and `hindfoot` length? Consider whether or not over plotting is an issue.
+```{r}
+deserts %>%
+  summarise(weight, hindfoot_length) %>%
+  filter(weight!="NA" & hindfoot_length!="NA")
+```
+```{r}
+deserts %>%
+  filter(weight!="NA" & hindfoot_length!="NA") %>%
+  ggplot(aes(x=weight, y=hindfoot_length)) +geom_point()+scale_x_log10()
+```
 
 9. Which two species have, on average, the highest weight? Once you have identified them, make a new column that is a ratio of `weight` to `hindfoot_length`. Make a plot that shows the range of this new ratio and fill by sex.
+```{r}
+deserts %>%
+  filter(weight!="NA") %>%
+  group_by(species) %>%
+  summarise(mean_weight=mean(weight)) %>%
+  arrange(desc(mean_weight)) %>%
+  head(2)
+```
+```{r}
+plot<-deserts %>%
+ filter(weight!="NA"&hindfoot_length!="NA") %>%
+  filter(species %in%c("albigula", "spectabilis")) %>%
+  group_by(species, sex) %>%
+  summarize(weight_hindfoot_length_ratio=weight/hindfoot_length)
+```
+```{r}
+plot %>%
+  ggplot(aes(x=species, y=weight_hindfoot_length_ratio, fill=sex)) +geom_boxplot()
+```
 
 10. Make one plot of your choice! Make sure to include at least two of the aesthetics options you have learned.
 
