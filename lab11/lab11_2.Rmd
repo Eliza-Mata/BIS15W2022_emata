@@ -210,7 +210,7 @@ The problem is that the plot becomes very busy. It is hard to interpret with eac
 ecosphere %>% 
   ggplot(aes(x=diet, y=log10_mass, fill=migratory_strategy))+ 
   geom_boxplot(alpha=0.4) + 
-  facet_wrap(~migratory_strategy, ncol=4)+
+  facet_wrap(~migratory_strategy, ncol=3)+
   theme(axis.text.x = element_text(angle = 60, hjust = 1))+
   labs(title = "Mass by Diet and Migratory Strategy",
        x = NULL,
