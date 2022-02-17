@@ -60,14 +60,26 @@ deserts %>%
 
 4. For the taxa included in the study, use the fill option to show the proportion of individuals sampled by `plot_type.`
 ```{r}
-
+p<- deserts %>%
+  ggplot(aes(x=taxa, fill=plot_type )) + geom_bar()
+p
 ```
 
 5. What is the range of weight for each species included in the study? Remove any observations of weight that are NA so they do not show up in the plot.
+```{r}
+deserts %>%
+  ggplot(aes(x=taxa, y=weight)) +geom_boxplot(na.rm = T)
+```
 
 6. Add another layer to your answer from #4 using `geom_point` to get an idea of how many measurements were taken for each species.
+```{r}
+p+geom_point()
+```
 
 7. [Dipodomys merriami](https://en.wikipedia.org/wiki/Merriam's_kangaroo_rat) is the most frequently sampled animal in the study. How have the number of observations of this species changed over the years included in the study?
+```{r}
+
+```
 
 8. What is the relationship between `weight` and `hindfoot` length? Consider whether or not over plotting is an issue.
 
