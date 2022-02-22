@@ -24,9 +24,9 @@ If you completed part 1 of today's lab then you should have the following packag
 
 `devtools` and `ggmap`
 ```{r}
-#install.packages("devtools")
-#library(devtools)
-#devtools::install_github("dkahle/ggmap")
+install.packages("devtools")
+library(devtools)
+devtools::install_github("dkahle/ggmap")
 ```
 
 `albersusa`
