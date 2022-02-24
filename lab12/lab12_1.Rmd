@@ -33,7 +33,7 @@ library(janitor)
 library(lubridate)
 ```
 
-Now we can list all of the files in a directory. This isvery helpful when you are working with multiple files at once.
+Now we can list all of the files in a directory. This is very helpful when you are working with multiple files at once.
 ```{r}
 files <- list.files(path = "data/spiders", pattern = ".csv")
 files
@@ -60,7 +60,11 @@ class(spider_list[[3]])
 ## Practice
 1. What are the names of our list elements?
 ```{r}
-
+spider_list[[10]]
+names(spider_list[[10]])
+```
+```{r}
+str(spider_list[[10]])
 ```
 
 ## Naming List Elements
@@ -101,6 +105,12 @@ Let's assume we have a database of customers and their purchases.
 ```{r}
 table_A <- read_csv(here("lab12", "data", "table_A.csv"))
 table_B <- read_csv(here("lab12", "data", "table_B.csv"))
+```
+```{r}
+table_A
+```
+```{r}
+table_B
 ```
 
 The general syntax for joins is...
@@ -161,7 +171,7 @@ We will use a join here to merge lat/long to our data frame. Both files contain 
 1. Which type of join is most appropriate in this case?  
 ```{r}
 spiders_with_locs <- left_join(spiders_all, spiders_locs, by = c("Accession"))
-summary(spiders_with_locs)
+spiders_with_locs
 ```
 
 As a side note, joining data can highlight problems or typos with the data when the join does not go as expected.  
@@ -192,7 +202,7 @@ dmy(spiders_with_locs$Date)
 
 If you want to use base R, then here is the format.
 ```{r}
-as.Date(spiders_with_locs$Date, format = "%d/%m/%y")
+as.Date(spiders_with_locs$Date, format = "%d/%m/%y") #not lubridate
 ```
 `
 There are many different options for working with dates and datetimes in lubridate including `ymd`, `mdy`, `dmy`, `mdy_hms`, `ymd_hms`.
@@ -207,23 +217,23 @@ dateformat5 <- "20200922 170000"
 ## Practice 
 1. Convert each of the examples above using lubridate.
 ```{r}
-
+ymd(dateformat1)
 ```
 
 ```{r}
-
+mdy(dateformat2)
 ```
 
 ```{r}
-
+dmy(dateformat3)
 ```
 
 ```{r}
-
+mdy_hms(dateformat4)
 ```
 
 ```{r}
-
+ymd_hms(dateformat5)
 ```
 
 Have a look at these options.
@@ -247,14 +257,18 @@ write.csv(spiders_with_locs, file = "spiders_with_locs.csv", row.names = FALSE)
 It will be very helpful if you can install the following packages before the next lab. Please install them in order!
 `devtools` and `ggmap`
 ```{r}
-#install.packages("devtools")
-#library(devtools)
+
 #devtools::install_github("dkahle/ggmap")
+library(devtools)
+library(ggmap)
+
+
 ```
 
 `rgeos`, `rgdal`, and `albersusa`
 ```{r, message = FALSE}
-#install.packages("albersusa")
+#devtools::install_github("hrbrmstr/albersusa")
+library("albersusa")
 ```
 
 ## That's it! Take a break and I will see you on Zoom!  

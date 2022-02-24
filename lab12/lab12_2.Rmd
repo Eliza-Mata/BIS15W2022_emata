@@ -37,8 +37,8 @@ devtools::install_github("dkahle/ggmap")
 ## Load the libraries
 ```{r, message = FALSE}
 library(tidyverse)
-library(here)
 library(janitor)
+library(here)
 library(ggmap)
 ```
 
