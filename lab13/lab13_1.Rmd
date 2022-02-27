@@ -28,7 +28,7 @@ Shiny is an R package which makes it easy to design interactive web applications
 ```{r, echo=FALSE}
 #install.packages("shiny")
 library(shiny)
-#library(devtools)
+library(devtools)
 #install_github("andreacirilloac/updateR")
 #library(updateR)
 #updateR()
@@ -67,6 +67,7 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 ```
+
 
 For the rest of the lab we will work on building an example app using `palmerpenguins`.  
 
@@ -176,6 +177,26 @@ homerange %>%
 ```
 
 2. Build a shiny app that produces a barplot that explores `locomotion` type with a fill reaction for the variables `trophic.guild` and `thermoregulation`.  
+```{r}
+library(shiny)
+
+ui <- fluidPage(radioButtons("x", "Select Fill Variable", choices= c("trophic.guild", "thermoregulation"), 
+                             selected = "trophic.guild"), 
+                plotOutput("plot")
+  
+)
+
+server <- function(input, output, session) {
+  output$plot <- renderPlot({
+    ggplot(data=homerange, aes_string(x="locomotion", fill= input$x))+
+      geom_bar(position = "dodge")
+  })
+  
+}
+
+shinyApp(ui, server)
+```
+
 ```{r}
 library(shiny)
 
