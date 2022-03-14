@@ -91,11 +91,15 @@ ggmap(map1) +
 ## Practice
 1. Map the spider locations with a different type of base map. Try to adjust the map using different aesthetics including `size`, `color`, and `alpha`.
 ```{r}
-
+ggmap(map1) + 
+  geom_point(data = spiders, aes(longitude, latitude, fill=county)) +
+  labs(x = "Longitude", y = "Latitude", title = "Spider Locations")
 ```
 
 ```{r}
-
+ggmap(map1) + 
+  geom_point(data = spiders, aes(longitude, latitude )) +
+  labs(x = "Longitude", y = "Latitude", title = "Spider Locations", alpha(0.5))
 ```
 
 ## Albers USA
@@ -168,7 +172,11 @@ ggsave(filename = "map.svg", device = "svg", plot = uso_map, height = 5, width =
 ## Practice
 1. Make a new column that labels each specimen as occurring in a cave or on the surface. The word "Cave" is part of the locality information.
 ```{r}
-
+spiders %>%
+  mutate( spider_location = case_when(
+    filter(locality, contains("Caves")) ~ "Cave",
+    TRUE ~ "Surface"
+  ))
 ```
 
 2. Now adjust the plot above to give a different color for specimens that occur in caves.
