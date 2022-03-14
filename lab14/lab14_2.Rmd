@@ -79,7 +79,7 @@ Do they fly? Are they a bird?
 We can recycle the `flying_vec`
 Do they fly?
 ```{r}
-# flying_vec
+ flying_vec
 ```
 
 Are they a bird?
@@ -107,7 +107,10 @@ homerange%>%
 
 what is the flying non-bird?
 ```{r}
-
+homerange%>%
+  filter(taxon != "birds")%>%
+  filter(locomotion == "flying")%>%
+  select(common.name)
 ```
 
 
@@ -194,9 +197,10 @@ ecto_vec<- homerange %>%
 ```{r}
 
 # Make the list of vectors:
-
+hr_list <- list(ecto_vec,aqua_vec,carni_vec,swimming_vec)
 
 # Make the plot:
+ggVennDiagram(hr_list, category.names = c("Ecto", "Aqua", "Carni", "Swim"), edge_size = 1.5)
 ```
 
 
@@ -207,7 +211,11 @@ Use dplyr to determine which 20 animals from this plot are:
 - NOT Carnivores?
 
 ```{r}
-
+homerange %>%
+  filter( realm == "aquatic") %>%
+  filter( thermoregulation == "ectotherm") %>%
+  filter( locomotion == "swimming") %>%
+  filter( trophic.guild != "carnivore")
 ```
 
 
@@ -248,11 +256,21 @@ If they dont fit, try tinkering the `scale_size_area(max_size =   )`
 
 make the count table:
 ```{r}
-
+reptile_count <- homerange %>%
+  filter( class == "reptilia") %>%
+  count(family)
 ```
 
 
 make the plot:
 ```{r}
-
+reptile_count %>%
+ggplot(aes(
+  label = family, 
+  size = n,
+  color = family
+  )) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size = 20) +
+  theme_minimal()
 ```
