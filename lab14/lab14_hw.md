@@ -360,6 +360,20 @@ ggVennDiagram( questions_list, category.names = c("Evil", "Red Eyes", "Male", "B
 ### 10. Choose one intersection of the venn diagram that is interesting to you. Use dplyr to find the names of the superheros in that intersection. 
 
 
+```r
+superhero_info %>%
+  filter( hair_color== "No Hair") %>%
+  filter( eye_color == "red") %>%
+  filter( alignment != "bad") %>%
+  filter( gender == "Female")
+```
+
+```
+## # A tibble: 0 x 10
+## # ... with 10 variables: name <chr>, gender <chr>, eye_color <chr>, race <chr>,
+## #   hair_color <chr>, height <dbl>, publisher <chr>, skin_color <chr>,
+## #   alignment <chr>, weight <dbl>
+```
 
 
 
@@ -425,6 +439,70 @@ power_frequency
 
 
 
+```r
+power_frequency%>%
+ggplot(aes(
+  label = power, 
+  size = freq,
+  color = power
+  )) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size = 10) +
+  theme_minimal()
+```
+
+```
+## Warning in png(filename = tmp_file, width = gw_pix, height = gh_pix, res =
+## dev_dpi, : 'width=12, height=8' are unlikely values in pixels
+
+## Warning in png(filename = tmp_file, width = gw_pix, height = gh_pix, res =
+## dev_dpi, : 'width=12, height=8' are unlikely values in pixels
+```
+
+```
+## Warning in png(filename = tmp_file, width = gw_pix, height = gh_pix, res =
+## dev_dpi, : 'width=16, height=8' are unlikely values in pixels
+```
+
+```
+## Warning in png(filename = tmp_file, width = gw_pix, height = gh_pix, res =
+## dev_dpi, : 'width=16, height=12' are unlikely values in pixels
+```
+
+```
+## Warning in png(filename = tmp_file, width = gw_pix, height = gh_pix, res =
+## dev_dpi, : 'width=8, height=8' are unlikely values in pixels
+```
+
+```
+## Warning in png(filename = tmp_file, width = gw_pix, height = gh_pix, res =
+## dev_dpi, : 'width=16, height=8' are unlikely values in pixels
+```
+
+```
+## Warning in png(filename = tmp_file, width = gw_pix, height = gh_pix, res =
+## dev_dpi, : 'width=12, height=8' are unlikely values in pixels
+```
+
+```
+## Warning in png(filename = tmp_file, width = gw_pix, height = gh_pix, res =
+## dev_dpi, : 'width=12, height=12' are unlikely values in pixels
+```
+
+```
+## Warning in png(filename = tmp_file, width = gw_pix, height = gh_pix, res =
+## dev_dpi, : 'width=16, height=12' are unlikely values in pixels
+```
+
+```
+## Warning in png(filename = tmp_file, width = gw_pix, height = gh_pix, res =
+## dev_dpi, : 'width=16, height=8' are unlikely values in pixels
+
+## Warning in png(filename = tmp_file, width = gw_pix, height = gh_pix, res =
+## dev_dpi, : 'width=16, height=8' are unlikely values in pixels
+```
+
+![](lab14_hw_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
 ### 13.  
 Who are some very powerful supers? 
  Lets make a different word cloud with the `superhero_powers` data. 
@@ -488,6 +566,19 @@ power_quantity
 
 
 
+```r
+power_quantity %>%
+ggplot(aes(
+  label = hero_names, 
+  size = sum_powers,
+  color = hero_names
+  )) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size = 10) +
+  theme_minimal()
+```
+
+![](lab14_hw_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
 
 ## That's it! 🎉
 Thanks for coding with us all winter! 

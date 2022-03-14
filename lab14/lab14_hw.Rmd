@@ -201,7 +201,11 @@ ggVennDiagram( questions_list, category.names = c("Evil", "Red Eyes", "Male", "B
 ### 10. Choose one intersection of the venn diagram that is interesting to you. Use dplyr to find the names of the superheros in that intersection. 
 
 ```{r}
-
+superhero_info %>%
+  filter( hair_color== "No Hair") %>%
+  filter( eye_color == "red") %>%
+  filter( alignment != "bad") %>%
+  filter( gender == "Female")
 ```
 
 
@@ -233,7 +237,15 @@ power_frequency
 
 ```{r}
 
-
+power_frequency%>%
+ggplot(aes(
+  label = power, 
+  size = freq,
+  color = power
+  )) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size = 10) +
+  theme_minimal()
 
 ```
 ### 13.  
@@ -263,7 +275,15 @@ power_quantity
 
 
 ```{r}
-
+power_quantity %>%
+ggplot(aes(
+  label = hero_names, 
+  size = sum_powers,
+  color = hero_names
+  )) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size = 10) +
+  theme_minimal()
 
 ```
 
