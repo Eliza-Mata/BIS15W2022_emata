@@ -25,6 +25,7 @@ library(tidyverse)
 library(janitor)
 library(here)
 library(naniar)
+library(RColorBrewer)
 ``` 
 
 ## Resources
@@ -50,26 +51,89 @@ head(gapminder)
 ```{r}
 summary(gapminder)
 ```
+```{r}
+gapminder <-clean_names(gapminder)
+```
 
 
 **2. Among the interesting variables in gapminder is life expectancy. How has global life expectancy changed between 1952 and 2007?**
 ```{r}
+gminder_1952 <- gapminder %>%
+  filter(between(year, 1952, 2007))
+gminder_1952
+```
 
+```{r}
+gminder_1952 %>%
+  group_by(country) %>%
+  summarise(life_exp_growth = max(life_exp)- min(life_exp)) %>%
+  arrange(desc(life_exp_growth))
 ```
 
 **3. How do the distributions of life expectancy compare for the years 1952 and 2007?**
+```{r}
+gapminder%>%
+  filter(year==1952) %>%
+  ggplot( aes(x=life_exp))+
+   geom_histogram(aes(y = ..density..), fill = "deepskyblue4", alpha = 0.4, color = "black")+
+  geom_density(color = "red")
+```
+```{r}
+gapminder%>%
+  filter(year==2007) %>%
+  ggplot( aes(x=life_exp))+
+   geom_histogram(aes(y = ..density..), fill = "deepskyblue4", alpha = 0.4, color = "black")+
+  geom_density(color = "red")
+```
 
 **4. Your answer above doesn't tell the whole story since life expectancy varies by region. Make a summary that shows the min, mean, and max life expectancy by continent for all years represented in the data.**
+```{r}
+a<- gapminder %>%
+  group_by(continent, year ) %>%
+  summarise(min_life_exp= min(life_exp), mean_life_exp = mean(life_exp), max_life_exp = max(life_exp) )
+a
+```
 
 **5. How has life expectancy changed between 1952-2007 for each continent?**
+```{r}
+a %>%
+  group_by(continent, year) %>%
+  summarise( life_exp_change = max_life_exp - min_life_exp)
+```
 
 **6. We are interested in the relationship between per capita GDP and life expectancy; i.e. does having more money help you live longer?**
+```{r}
+gapminder %>%
+  ggplot( aes(x= life_exp, y= gdp_percap)) +
+  geom_point()
+```
 
 **7. Which countries have had the largest population growth since 1952?**
+```{r}
+b <- gminder_1952 %>%
+  group_by(country) %>%
+  summarise( life_exp_change = max(life_exp) - min(life_exp)) %>%
+  arrange(desc(life_exp_change))
+b
+```
+
 
 **8. Use your results from the question above to plot population growth for the top five countries since 1952.**
+```{r}
+gapminder %>%
+  filter(country %in% c("Oman","Vietnam", "Indonesia","Saudi Arabia", "Libya" )) %>%
+  ggplot(aes(x=year, y=life_exp, fill=country ))+
+  geom_point()+ scale_colour_brewer(palette = "BuPu")
+
+```
 
 **9. How does per-capita GDP growth compare between these same five countries?**
+```{r}
+gapminder %>%
+  filter(country %in% c("Oman","Vietnam", "Indonesia","Saudi Arabia", "Libya" )) %>%
+  ggplot(aes(x=year, y=gdp_percap, fill=country ))+
+  geom_point()+ scale_colour_brewer(palette = "BuPu")
+```
 
 **10. Make one plot of your choice that uses faceting!**
 
