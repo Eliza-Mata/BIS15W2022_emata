@@ -3,4 +3,4 @@
 Eliza Mata
 UC Davis Sophomore
 Major: Biology
-
+## All completed homework is in the homework folder
